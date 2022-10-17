@@ -9,17 +9,12 @@ console.log(selectInput.value,typeof(selectInput.value));
 
 btnGenerator.addEventListener("click",function(){
 squareBox.innerHTML="";
-console.log(selectInput.value);
 const arrayLenght=convertSelectInput(selectInput.value);
-
-console.log(arrayLenght);
 const arraySquare=createArray(arrayLenght);
-console.log(arraySquare);
 for(let i=0;i<arraySquare.length;i++){
 const nodeHtml=newHtmlElement(arraySquare[i],selectInput.value);
 nodeHtml.addEventListener("click",handleDivClick);
 squareBox.append(nodeHtml);
-
 }
 })
 
@@ -64,13 +59,16 @@ console.log(this.textContent);
 function newHtmlElement(textElement,classBasis){
 const element=document.createElement("div");
 element.classList.add("square-common");
+const classStructure="";
 if(classBasis==="difficolta-1"){
-    element.classList.add("square-1")
+    classStructure= "square-1"
 }
 else if(classBasis==="difficolta-2")
-element.classList.add("square-2")
+classStructure="square-2"
 else if(classBasis==="difficolta-3")
-element.classList.add("square-3")
+classStructure="square-3"
+
+element.classList.add(classStructure);
 
 
 element.textContent=textElement;
