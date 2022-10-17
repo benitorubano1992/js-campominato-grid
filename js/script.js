@@ -1,14 +1,47 @@
 console.log("pagina js collegata");
 //task 1 creare un array di 100 elementi 
 const squareBox=document.getElementById("grid");
-const arraySquare=createArray(100);
+
+const selectInput=document.getElementById("level-input");
+const btnGenerator=document.getElementById("btn-gen");
+console.log(selectInput)
+console.log(selectInput.value,typeof(selectInput.value));
+
+btnGenerator.addEventListener("click",function(){
+squareBox.innerHTML="";
+console.log(selectInput.value);
+const arrayLenght=convertSelectInput(selectInput.value);
+
+console.log(arrayLenght);
+const arraySquare=createArray(arrayLenght);
+console.log(arraySquare);
 for(let i=0;i<arraySquare.length;i++){
-const nodeHtml=newHtmlElement(arraySquare[i]);
+const nodeHtml=newHtmlElement(arraySquare[i],selectInput.value);
 nodeHtml.addEventListener("click",handleDivClick);
 squareBox.append(nodeHtml);
+
 }
+})
 
 
+
+
+/**
+ *funzione che controlla input del select e a seconda dei casi lo converte in un numero che costituisce il numero di celle della griglia 
+ * @param{string} la proprieta del value del nodo html select
+*@return {number} numero che rapresenta il numero di elementi nella griglia
+ */
+function convertSelectInput(selectValue){
+    let numElement=0;
+        if(selectValue==="difficolta-2")
+         numElement=81;   
+        else if(selectValue=== "difficolta-3")
+        numElement=49;
+        else if (selectValue==="difficolta-1")
+        numElement=100; 
+        
+        return numElement;
+    }
 
 
 
@@ -19,22 +52,34 @@ squareBox.append(nodeHtml);
 function handleDivClick(){
 this.classList.add("azzurro");
 console.log(this.textContent);  
-
 }  
 
 
 /**
  * funzione che crea un elemento html,un div dove il contenuto testuale è rapresentato dal argomento della funzione
  * @param{number} valore da inserire nel contenuto dell 'elemento html creato
+ * @param{string} stringa che rapresenta il valore del select input che a seconda dei casi assumera valori diversi a cui corrispondoni classi diverse
  * return {HTML element/object} restituisce un nodo/elemento HTML 
 */
-function newHtmlElement(textElement){
+function newHtmlElement(textElement,classBasis){
 const element=document.createElement("div");
-element.classList.add("square");
+element.classList.add("square-common");
+if(classBasis==="difficolta-1"){
+    element.classList.add("square-1")
+}
+else if(classBasis==="difficolta-2")
+element.classList.add("square-2")
+else if(classBasis==="difficolta-3")
+element.classList.add("square-3")
+
+
 element.textContent=textElement;
 return element;
-
 }
+
+
+
+
 
 
 /**
@@ -44,11 +89,10 @@ funzione che crea un array di numeri di lunghezza pari al argomento passato, al 
  */
 function createArray(arrayLength){
 const arrayResult=[];
-while(arrayResult.length<arrayLength){
-const randomNumber=getRndInteger(1, arrayLength);
-if(!arrayResult.includes(randomNumber))
-arrayResult.push(randomNumber);
+for(let i=0;i<arrayLength;i++){
+    arrayResult.push(i+1);
 }
+
 return arrayResult;
 }
 
@@ -61,7 +105,5 @@ funzione che prende in input due numeri e genera un numero casuale compreso tra 
 
 * 
  */
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
-  }
+
   
